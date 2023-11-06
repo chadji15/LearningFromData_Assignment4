@@ -1,0 +1,225 @@
+Run args:
+
+Namespace(train_file='data//train.tsv', dev_file='data//dev.tsv', test_file=None, trigram=True, stem=True, finetune=True, C=0.5, loss='squared_hinge', penalty='l2', balanced_weight=False, save_model_path=None, seed=1, tfidf=True, remove_emojis=False, remove_handles=False)
+Reading dataset...
+Preprocessing dataset...
+Running Grid Search...
+Fitting 1 folds for each of 20 candidates, totalling 20 fits
+Results: 
+-------------------------
+
+    cls__C      cls__loss cls__penalty cls__class_weight  f1-score
+0      0.1          hinge           l2               NaN  0.475669
+1      0.1  squared_hinge           l2               NaN  0.656861
+2      0.5          hinge           l2               NaN  0.618745
+3      0.5  squared_hinge           l2               NaN  0.692098
+4      1.0          hinge           l2               NaN  0.663837
+5      1.0  squared_hinge           l2               NaN  0.701210
+6      2.0          hinge           l2               NaN  0.692765
+7      2.0  squared_hinge           l2               NaN  0.716251
+8      4.0          hinge           l2               NaN  0.689752
+9      4.0  squared_hinge           l2               NaN  0.706708
+10     0.1  squared_hinge           l1          balanced  0.681602
+11     0.1  squared_hinge           l1              None  0.642339
+12     0.5  squared_hinge           l1          balanced  0.698950
+13     0.5  squared_hinge           l1              None  0.695233
+14     1.0  squared_hinge           l1          balanced  0.714863
+15     1.0  squared_hinge           l1              None  0.718927
+16     2.0  squared_hinge           l1          balanced  0.716376
+17     2.0  squared_hinge           l1              None  0.716681
+18     4.0  squared_hinge           l1          balanced  0.689891
+19     4.0  squared_hinge           l1              None  0.700414
+Evaluating classifier...
+Evaluation of best model on dev set: 
+-------------------------
+
+{'cls__C': 1,
+ 'cls__class_weight': None,
+ 'cls__loss': 'squared_hinge',
+ 'cls__penalty': 'l1'}
+{'accuracy': 0.838,
+ 'cm': array([[609,  39],
+       [123, 229]], dtype=int64),
+ 'f-score': 0.8106591865357643,
+ 'precision': 0.8432224125275263,
+ 'recall': 0.7951914983164983}
+Run args:
+
+Namespace(train_file='data//train.tsv', dev_file='data//dev.tsv', test_file=None, trigram=True, stem=True, finetune=True, C=0.5, loss='squared_hinge', penalty='l2', balanced_weight=False, save_model_path=None, seed=12, tfidf=True, remove_emojis=False, remove_handles=False)
+Reading dataset...
+Preprocessing dataset...
+Running Grid Search...
+Fitting 1 folds for each of 20 candidates, totalling 20 fits
+Results: 
+-------------------------
+
+    cls__C      cls__loss cls__penalty cls__class_weight  f1-score
+0      0.1          hinge           l2               NaN  0.475669
+1      0.1  squared_hinge           l2               NaN  0.656861
+2      0.5          hinge           l2               NaN  0.618745
+3      0.5  squared_hinge           l2               NaN  0.692098
+4      1.0          hinge           l2               NaN  0.663837
+5      1.0  squared_hinge           l2               NaN  0.701210
+6      2.0          hinge           l2               NaN  0.692765
+7      2.0  squared_hinge           l2               NaN  0.716251
+8      4.0          hinge           l2               NaN  0.689752
+9      4.0  squared_hinge           l2               NaN  0.706708
+10     0.1  squared_hinge           l1          balanced  0.681602
+11     0.1  squared_hinge           l1              None  0.642339
+12     0.5  squared_hinge           l1          balanced  0.698950
+13     0.5  squared_hinge           l1              None  0.695233
+14     1.0  squared_hinge           l1          balanced  0.714863
+15     1.0  squared_hinge           l1              None  0.718927
+16     2.0  squared_hinge           l1          balanced  0.718525
+17     2.0  squared_hinge           l1              None  0.716681
+18     4.0  squared_hinge           l1          balanced  0.690790
+19     4.0  squared_hinge           l1              None  0.701315
+Evaluating classifier...
+Evaluation of best model on dev set: 
+-------------------------
+
+{'cls__C': 1,
+ 'cls__class_weight': None,
+ 'cls__loss': 'squared_hinge',
+ 'cls__penalty': 'l1'}
+{'accuracy': 0.838,
+ 'cm': array([[609,  39],
+       [123, 229]], dtype=int64),
+ 'f-score': 0.8106591865357643,
+ 'precision': 0.8432224125275263,
+ 'recall': 0.7951914983164983}
+Run args:
+
+Namespace(train_file='data//train.tsv', dev_file='data//dev.tsv', test_file=None, trigram=True, stem=True, finetune=True, C=0.5, loss='squared_hinge', penalty='l2', balanced_weight=False, save_model_path=None, seed=123, tfidf=True, remove_emojis=False, remove_handles=False)
+Reading dataset...
+Preprocessing dataset...
+Running Grid Search...
+Fitting 1 folds for each of 20 candidates, totalling 20 fits
+Results: 
+-------------------------
+
+    cls__C      cls__loss cls__penalty cls__class_weight  f1-score
+0      0.1          hinge           l2               NaN  0.475669
+1      0.1  squared_hinge           l2               NaN  0.656861
+2      0.5          hinge           l2               NaN  0.618745
+3      0.5  squared_hinge           l2               NaN  0.692098
+4      1.0          hinge           l2               NaN  0.663837
+5      1.0  squared_hinge           l2               NaN  0.701210
+6      2.0          hinge           l2               NaN  0.692765
+7      2.0  squared_hinge           l2               NaN  0.716251
+8      4.0          hinge           l2               NaN  0.689752
+9      4.0  squared_hinge           l2               NaN  0.706708
+10     0.1  squared_hinge           l1          balanced  0.681602
+11     0.1  squared_hinge           l1              None  0.642339
+12     0.5  squared_hinge           l1          balanced  0.698950
+13     0.5  squared_hinge           l1              None  0.695233
+14     1.0  squared_hinge           l1          balanced  0.714863
+15     1.0  squared_hinge           l1              None  0.718927
+16     2.0  squared_hinge           l1          balanced  0.717292
+17     2.0  squared_hinge           l1              None  0.716681
+18     4.0  squared_hinge           l1          balanced  0.690790
+19     4.0  squared_hinge           l1              None  0.700880
+Evaluating classifier...
+Evaluation of best model on dev set: 
+-------------------------
+
+{'cls__C': 1,
+ 'cls__class_weight': None,
+ 'cls__loss': 'squared_hinge',
+ 'cls__penalty': 'l1'}
+{'accuracy': 0.838,
+ 'cm': array([[609,  39],
+       [123, 229]], dtype=int64),
+ 'f-score': 0.8106591865357643,
+ 'precision': 0.8432224125275263,
+ 'recall': 0.7951914983164983}
+Run args:
+
+Namespace(train_file='data//train.tsv', dev_file='data//dev.tsv', test_file=None, trigram=True, stem=True, finetune=True, C=0.5, loss='squared_hinge', penalty='l2', balanced_weight=False, save_model_path=None, seed=1234, tfidf=True, remove_emojis=False, remove_handles=False)
+Reading dataset...
+Preprocessing dataset...
+Running Grid Search...
+Fitting 1 folds for each of 20 candidates, totalling 20 fits
+Results: 
+-------------------------
+
+    cls__C      cls__loss cls__penalty cls__class_weight  f1-score
+0      0.1          hinge           l2               NaN  0.475669
+1      0.1  squared_hinge           l2               NaN  0.656861
+2      0.5          hinge           l2               NaN  0.618745
+3      0.5  squared_hinge           l2               NaN  0.692098
+4      1.0          hinge           l2               NaN  0.663837
+5      1.0  squared_hinge           l2               NaN  0.701210
+6      2.0          hinge           l2               NaN  0.692765
+7      2.0  squared_hinge           l2               NaN  0.716251
+8      4.0          hinge           l2               NaN  0.689752
+9      4.0  squared_hinge           l2               NaN  0.706708
+10     0.1  squared_hinge           l1          balanced  0.681602
+11     0.1  squared_hinge           l1              None  0.642339
+12     0.5  squared_hinge           l1          balanced  0.700185
+13     0.5  squared_hinge           l1              None  0.695233
+14     1.0  squared_hinge           l1          balanced  0.714863
+15     1.0  squared_hinge           l1              None  0.718927
+16     2.0  squared_hinge           l1          balanced  0.717609
+17     2.0  squared_hinge           l1              None  0.716681
+18     4.0  squared_hinge           l1          balanced  0.693492
+19     4.0  squared_hinge           l1              None  0.699978
+Evaluating classifier...
+Evaluation of best model on dev set: 
+-------------------------
+
+{'cls__C': 1,
+ 'cls__class_weight': None,
+ 'cls__loss': 'squared_hinge',
+ 'cls__penalty': 'l1'}
+{'accuracy': 0.838,
+ 'cm': array([[609,  39],
+       [123, 229]], dtype=int64),
+ 'f-score': 0.8106591865357643,
+ 'precision': 0.8432224125275263,
+ 'recall': 0.7951914983164983}
+Run args:
+
+Namespace(train_file='data//train.tsv', dev_file='data//dev.tsv', test_file=None, trigram=True, stem=True, finetune=True, C=0.5, loss='squared_hinge', penalty='l2', balanced_weight=False, save_model_path=None, seed=12345, tfidf=True, remove_emojis=False, remove_handles=False)
+Reading dataset...
+Preprocessing dataset...
+Running Grid Search...
+Fitting 1 folds for each of 20 candidates, totalling 20 fits
+Results: 
+-------------------------
+
+    cls__C      cls__loss cls__penalty cls__class_weight  f1-score
+0      0.1          hinge           l2               NaN  0.475669
+1      0.1  squared_hinge           l2               NaN  0.656861
+2      0.5          hinge           l2               NaN  0.618745
+3      0.5  squared_hinge           l2               NaN  0.692098
+4      1.0          hinge           l2               NaN  0.663837
+5      1.0  squared_hinge           l2               NaN  0.701210
+6      2.0          hinge           l2               NaN  0.692765
+7      2.0  squared_hinge           l2               NaN  0.716251
+8      4.0          hinge           l2               NaN  0.689752
+9      4.0  squared_hinge           l2               NaN  0.706708
+10     0.1  squared_hinge           l1          balanced  0.681602
+11     0.1  squared_hinge           l1              None  0.642339
+12     0.5  squared_hinge           l1          balanced  0.698950
+13     0.5  squared_hinge           l1              None  0.695233
+14     1.0  squared_hinge           l1          balanced  0.714863
+15     1.0  squared_hinge           l1              None  0.718004
+16     2.0  squared_hinge           l1          balanced  0.717292
+17     2.0  squared_hinge           l1              None  0.716681
+18     4.0  squared_hinge           l1          balanced  0.691691
+19     4.0  squared_hinge           l1              None  0.700880
+Evaluating classifier...
+Evaluation of best model on dev set: 
+-------------------------
+
+{'cls__C': 1,
+ 'cls__class_weight': None,
+ 'cls__loss': 'squared_hinge',
+ 'cls__penalty': 'l1'}
+{'accuracy': 0.838,
+ 'cm': array([[609,  39],
+       [123, 229]], dtype=int64),
+ 'f-score': 0.8106591865357643,
+ 'precision': 0.8432224125275263,
+ 'recall': 0.7951914983164983}
