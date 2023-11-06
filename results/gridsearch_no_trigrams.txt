@@ -1,0 +1,42 @@
+Reading dataset...
+Preprocessing dataset...
+Running Grid Search...
+Fitting 1 folds for each of 20 candidates, totalling 20 fits
+Results: 
+-------------------------
+
+    cls__C      cls__loss cls__penalty cls__class_weight  f1-score
+0      0.1          hinge           l2               NaN  0.393443
+1      0.1  squared_hinge           l2               NaN  0.459240
+2      0.5          hinge           l2               NaN  0.393443
+3      0.5  squared_hinge           l2               NaN  0.470439
+4      1.0          hinge           l2               NaN  0.393443
+5      1.0  squared_hinge           l2               NaN  0.470580
+6      2.0          hinge           l2               NaN  0.393443
+7      2.0  squared_hinge           l2               NaN  0.470095
+8      4.0          hinge           l2               NaN  0.395769
+9      4.0  squared_hinge           l2               NaN  0.473710
+10     0.1  squared_hinge           l1          balanced  0.578712
+11     0.1  squared_hinge           l1              None  0.439265
+12     0.5  squared_hinge           l1          balanced  0.582802
+13     0.5  squared_hinge           l1              None  0.470439
+14     1.0  squared_hinge           l1          balanced  0.581248
+15     1.0  squared_hinge           l1              None  0.466979
+16     2.0  squared_hinge           l1          balanced  0.582389
+17     2.0  squared_hinge           l1              None  0.468839
+18     4.0  squared_hinge           l1          balanced  0.580820
+19     4.0  squared_hinge           l1              None  0.472526
+Evaluating classifier...
+Evaluation of best model on dev set: 
+-------------------------
+
+{'cls__C': 0.5,
+ 'cls__class_weight': 'balanced',
+ 'cls__loss': 'squared_hinge',
+ 'cls__penalty': 'l1'}
+{'accuracy': 0.604,
+ 'cm': array([[373, 275],
+       [121, 231]], dtype=int64),
+ 'f-score': 0.5958507342044994,
+ 'precision': 0.605791233937687,
+ 'recall': 0.6159336419753086}
