@@ -87,3 +87,8 @@ by the model
 ``python OLID_svc.py -t data/train.tsv -d data/dev.tsv --test_file data/test.tsv
 --seed 1 --penalty l1  --loss squared_hinge --C 0.5 --tfidf 
 --stem --trigram --offensiveness``
+
+## BERT experiments
+
+In order to run the BERT experiments, please find the BERT.ipynb notebook inside the src folder. 
+All code blocks can be run sequentially in order to perform the grid search (be aware that takes a long time) and to get the most frequent word list.
