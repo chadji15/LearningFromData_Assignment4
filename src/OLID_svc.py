@@ -507,7 +507,8 @@ def classify_based_on_word_list(X, word_list):
     y_pred = []
     for sentence in X:
         prediction = 0
-        for word_token in sentence:
+        words = sentence.split()
+        for word_token in words:
             if word_token in word_list:
                 prediction = 1
         y_pred.append(prediction)
@@ -552,8 +553,8 @@ def offensive_words(args, X_train, Y_train, X_val, Y_val):
         pprint(res)
 
     # Combine training and validation set
-    X = X_train + X_val
-    Y = Y_train + Y_val
+    X = X_train #+ X_val
+    Y = Y_train #+ Y_val
     # Get the prediction on the training set
     y_pred_train = classifier.predict(X)
 
@@ -564,7 +565,7 @@ def offensive_words(args, X_train, Y_train, X_val, Y_val):
 
     # Offensiveness metric for each word based on the predictions
     normalized_word_frequency_in_offensive_instances_train = compute_offensiveness_metric(X, y_pred_train)
-    # Get the 100 most offensive words and make predictions using this list
+    # Get the most offensive words and make predictions using this list
     word_list_train = list(normalized_word_frequency_in_offensive_instances_train.keys())
     y_pred_word_list = classify_based_on_word_list(X_test, word_list_train)
     # Calculate f1 score of the simple model and agreement percentage with the SVM
