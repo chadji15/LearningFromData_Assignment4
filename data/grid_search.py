@@ -85,9 +85,9 @@ def evaluate_model(lm, tokens_dev, Y_dev_bin, labels):
     return accuracy_score(Y_test, Y_pred), f1_score(Y_test, Y_pred)
 
 def create_param_grid():
-    param_grid = {'epochs': [1, 2, 3, 4, 5], 'max_seq_len': [50, 100, 150], 
+    param_grid = {'epochs': [1, 2, 3], 'max_seq_len': [50, 100, 150], 
                   'batches': [16, 32, 64], 
-                  'lr_schedulers': ["PolynomialDecay", "CosineDecay", 5e-5, 4e-5, 3e-5]}
+                  'lr_schedulers': ["PolynomialDecay", "CosineDecay", 5e-5, 3e-5]}
     keys, values = zip(*param_grid.items())
     result = [dict(zip(keys, p)) for p in product(*values)]
     return result
@@ -118,7 +118,7 @@ def main():
     models = []
     max_accuracy = 0
     i = 0
-    seeds = [1234, 123, 12, 21, 321]
+    seeds = [1234, 123]
     for seed in seeds:
         for parameters in param_grid:
             tf.keras.backend.clear_session()
