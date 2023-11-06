@@ -406,7 +406,7 @@ def compute_word_frequency(X_train):
     """
     word_counts = defaultdict(int)
     for sentence in X_train:
-        words = set(sentence.split())
+        words = sentence.split()
         for word in words:
             word_counts[word] += 1
     return word_counts
@@ -428,7 +428,7 @@ def compute_word_frequency_in_offensive_instances(X_train, y_pred):
     word_counts = defaultdict(int)
     for (sentence, predicted_label) in zip(X_train, y_pred):
         if predicted_label == 1:  # If the data instance is predicted as offensive add it's o
-            words = set(sentence.split())
+            words = sentence.split()
             for word in words:
                 word_counts[word] += 1
     return {k: v for k, v in sorted(word_counts.items(), key=lambda item: item[1], reverse=True)}
@@ -450,13 +450,21 @@ def compute_normalized_word_frequency_in_offensive_instances(word_frequency, wor
     -------
     Dictionary
     """
-    normalized_word_frequency_in_offensive_instances = defaultdict(int)
+    normalized_word_frequency_in_offensive_instances = defaultdict(float)
     for word in word_frequency_in_offensive_instances:
         if word_frequency[word] != 0 and word_frequency[word] >= support_threshold:
             normalized_word_frequency_in_offensive_instances[word] = word_frequency_in_offensive_instances[word] / \
                                                                      word_frequency[word]
+
+    def threshold(pair):
+        k, v = pair
+        if v <= 0.5:
+            return False
+        return True
+
+    filtered_dict = dict(filter(threshold, normalized_word_frequency_in_offensive_instances.items()))
     return {k: v for k, v in
-            sorted(normalized_word_frequency_in_offensive_instances.items(), key=lambda item: item[1], reverse=True)}
+            sorted(filtered_dict.items(), key=lambda item: item[1], reverse=True)}
 
 
 def compute_offensiveness_metric(X, y_pred):
@@ -477,6 +485,7 @@ def compute_offensiveness_metric(X, y_pred):
     word_frequency_in_offensive_instances = compute_word_frequency_in_offensive_instances(X, y_pred)
     normalized_word_frequency_in_offensive_instances = compute_normalized_word_frequency_in_offensive_instances(
         word_frequency, word_frequency_in_offensive_instances, 10)
+
     return normalized_word_frequency_in_offensive_instances
 
 
@@ -498,7 +507,8 @@ def classify_based_on_word_list(X, word_list):
     y_pred = []
     for sentence in X:
         prediction = 0
-        for word_token in sentence:
+        words = sentence.split()
+        for word_token in words:
             if word_token in word_list:
                 prediction = 1
         y_pred.append(prediction)
@@ -543,8 +553,8 @@ def offensive_words(args, X_train, Y_train, X_val, Y_val):
         pprint(res)
 
     # Combine training and validation set
-    X = X_train + X_val
-    Y = Y_train + Y_val
+    X = X_train #+ X_val
+    Y = Y_train #+ Y_val
     # Get the prediction on the training set
     y_pred_train = classifier.predict(X)
 
@@ -555,8 +565,8 @@ def offensive_words(args, X_train, Y_train, X_val, Y_val):
 
     # Offensiveness metric for each word based on the predictions
     normalized_word_frequency_in_offensive_instances_train = compute_offensiveness_metric(X, y_pred_train)
-    # Get the 100 most offensive words and make predictions using this list
-    word_list_train = list(normalized_word_frequency_in_offensive_instances_train.keys())[:100]
+    # Get the most offensive words and make predictions using this list
+    word_list_train = list(normalized_word_frequency_in_offensive_instances_train.keys())
     y_pred_word_list = classify_based_on_word_list(X_test, word_list_train)
     # Calculate f1 score of the simple model and agreement percentage with the SVM
     list_model_f1 = f1_score(y_test_bin, y_pred_word_list, average='macro')
@@ -564,7 +574,7 @@ def offensive_words(args, X_train, Y_train, X_val, Y_val):
 
     # Do the same but this time using the ground truth labels
     offensiveness_metric_raw_data = compute_offensiveness_metric(X, Y)
-    word_list_raw_data = list(offensiveness_metric_raw_data.keys())[:100]
+    word_list_raw_data = list(offensiveness_metric_raw_data.keys())
     y_pred_word_list_raw_data = classify_based_on_word_list(X_test, word_list_raw_data)
     trivial_model_f1 = f1_score(y_test_bin, y_pred_word_list_raw_data, average='macro')
 
