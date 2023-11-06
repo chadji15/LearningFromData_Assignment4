@@ -531,12 +531,11 @@ def offensive_words(args, X_train, Y_train, X_val, Y_val):
 
     Returns
     -------
-    None
+    list_model_f1: float
+    agreement_percent: float
+    trivial_model_f1: float
 
     """
-
-    if args.test_file is None:
-        raise Exception("Please provide test file")
     classifier = make_pipeline(args)
     # Train the whole pipline on the training data
     print("Training classifier...")
@@ -553,15 +552,18 @@ def offensive_words(args, X_train, Y_train, X_val, Y_val):
         pprint(res)
 
     # Combine training and validation set
-    X = X_train #+ X_val
-    Y = Y_train #+ Y_val
+    X = X_train
+    Y = Y_train
     # Get the prediction on the training set
     y_pred_train = classifier.predict(X)
 
-    # Read the test set
-    X_test, y_test = read_corpus(args.test_file)
-    X_test = preprocess(X_test, args.stem, args.remove_emojis, args.remove_handles)
-    y_test_bin = binarize_labels(y_test)
+    X_test = X_val
+    y_test_bin = Y_val
+    if args.test_file:
+        # Read the test set
+        X_test, y_test = read_corpus(args.test_file)
+        X_test = preprocess(X_test, args.stem, args.remove_emojis, args.remove_handles)
+        y_test_bin = binarize_labels(y_test)
 
     # Offensiveness metric for each word based on the predictions
     normalized_word_frequency_in_offensive_instances_train = compute_offensiveness_metric(X, y_pred_train)
@@ -596,6 +598,7 @@ Most offensive words based on ground truth
 F1-Score of filter based on this metric: {trivial_model_f1}
 ''')
 
+    return list_model_f1, agreement_percent, trivial_model_f1
 
 def main():
     args = create_arg_parser()

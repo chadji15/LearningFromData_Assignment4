@@ -14,17 +14,20 @@ feature_stats: Trains an SVC with TFIDF, stemming and trigrams using
     the hyperparameters specified in the function body 5 times and calculates
     average f1-score and standard deviation
 ablation_studies: Determine the contribution of each additional feature
+offensiveness_stats: Run 10 experiments for the offensiveness experiment
 
 usage: svc_helper.py [-h]
                  [--mode {finetune_baseline,finetune_features,baseline_stats,feature_stats,ablation_studies}]
 
 options:
   -h, --help            show this help message and exit
-  --mode {finetune_baseline,finetune_features,baseline_stats,feature_stats,ablation_studies}
+  --mode {finetune_baseline,finetune_features,baseline_stats,feature_stats,ablation_studies, offensiveness_stats}
 
 """
 
 import itertools
+import sys
+
 import OLID_svc
 from contextlib import redirect_stdout
 import random
@@ -127,7 +130,7 @@ def get_features_stats():
             args.balanced_weight = False
             args.penalty = 'l1'
             args.loss = 'squared_hinge'
-            args.C = 0.5
+            args.C = 1
             args.trigram = True
             args.stem = True
             args.tfidf = True
@@ -200,20 +203,79 @@ Average F1-Score: {avg}
 Standard Deviation: {stdd}''')
 
 
+def offensiveness_stats():
+    with open('results\\offensiveness_stats .txt', 'w', encoding='utf-8') as f:
+        with redirect_stdout(f):
+            args = OLID_svc.create_arg_parser()
+            args.train_file = "data//train.tsv"
+            args.dev_file = "data//dev.tsv"
+            args.balanced_weight = False
+            args.penalty = 'l1'
+            args.loss = 'squared_hinge'
+            args.C = 1
+            args.trigram = True
+            args.stem = True
+            args.tfidf = True
+            args.offensiveness = True
+            print(args)
+            list_f1_list = []
+            agreement_list = []
+            seeds = [1, 12, 123, 1234, 12345,2,23,234,2345,23456]
+            for seed in seeds:
+                np.random.seed(seed)
+                args.seed = seed
+                print(f'''----------
+SEED: {seed}
+----------''')
+                X_train, y_train_bin, X_val, y_val_bin = OLID_svc.make_dataset(args)
+                list_model_f1, agreement, trivial_f1 = OLID_svc.offensive_words(args,X_train,y_train_bin, X_val, y_val_bin)
+                list_f1_list.append(list_model_f1)
+                agreement_list.append(agreement)
+
+            print(f'F1-Score of filter based on offensive words from ground truth: {trivial_f1}')
+            avg = sum(list_f1_list) / len(list_f1_list)
+            stdd = np.std(list_f1_list)
+            print(f'''Stats for model based on list from predictions:
+Scores: {list_f1_list}
+Average F1-Score (on validation set): {avg}
+Standard Deviation: {stdd}
+
+Agreement with teacher model:
+Scores: {agreement_list}
+Average: {sum(agreement_list) / len(agreement_list)}
+Standard deviation: {np.std(agreement_list)}''')
+
+            best_seed = seeds[np.argmax(list_f1_list)]
+            np.random.seed(best_seed)
+            args.seed = best_seed
+            args.test_file = 'data//test.tsv'
+            print(f'''----------
+SEED: {best_seed}
+----------''')
+            X_train, y_train_bin, X_val, y_val_bin = OLID_svc.make_dataset(args)
+            list_model_f1, agreement, trivial_f1 = OLID_svc.offensive_words(args, X_train, y_train_bin, X_val,
+                                                                            y_val_bin)
+            print(f"F1 Score on the test set: {list_model_f1}. \nAgreement with teacher model: {agreement}")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--mode',
-        choices=['finetune_baseline', 'finetune_features', 'baseline_stats', 'feature_stats', 'ablation_studies']
+        choices=['finetune_baseline', 'finetune_features', 'baseline_stats', 'feature_stats', 'ablation_studies',
+                 'offensiveness_stats']
     )
-    args = parser.parse_args()
-    if args.mode == 'finetune_baseline':
+    args1 = parser.parse_args()
+    sys.argv = [sys.argv[0]]
+    if args1.mode == 'finetune_baseline':
         get_best_config_baseline()
-    elif args.mode == 'finetune_features':
+    elif args1.mode == 'finetune_features':
         get_best_config_features()
-    elif args.mode == 'baseline_stats':
+    elif args1.mode == 'baseline_stats':
         get_baseline_stats()
-    elif args.mode == 'feature_stats':
+    elif args1.mode == 'feature_stats':
         get_features_stats()
-    elif args.mode == 'ablation_studies':
+    elif args1.mode == 'ablation_studies':
         ablation_studies()
+    elif args1.mode == 'offensiveness_stats':
+        offensiveness_stats()
